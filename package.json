@@ -32,13 +32,14 @@
 		"typescript": "^3.9.10"
 	},
 	"dependencies": {
-		"@colyseus/monitor": "^0.14.22",
-		"colyseus": "^0.14.23",
-		"colyseus.js": "^0.14.13",
+		"@colyseus/command": "^0.1.6",
+		"@colyseus/monitor": "^0.12.2",
+		"colyseus": "^0.14.7",
+		"colyseus.js": "^0.14.1",
 		"cors": "^2.8.5",
 		"express": "^4.16.4",
-		"phaser": "^3.55.2",
-		"regenerator-runtime": "^0.13.11"
+		"phaser": "^3.50.1",
+		"regenerator-runtime": "^0.13.7"
 	},
 	"parcelCleanPaths": [
 		"dist"
