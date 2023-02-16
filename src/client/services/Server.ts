@@ -31,18 +31,24 @@ export default class Server
         this.room.onStateChange.once(state => {
             this.events.emit('once-state-changed', state)
         })
-        this.room.state.board.onChange = (item: Cell, key: number) => {
-            this.events.emit('board-changed', item, key)
-        }
         this.room.state.onChange = (changes) => {
             changes.forEach(change => {
                 const { field, value} = change;
-                switch (field) {
-                    case 'activePlayer':
-                        this.events.emit('player-turn-changed', value)
+                switch (field) 
+                {
+					case 'activePlayer':
+						this.events.emit('player-turn-changed', value)
+						break
+
+					case 'winningPlayer':
+						this.events.emit('player-win', value)
                         break;
                 }
             })
+        }
+
+        this.room.state.board.onChange = (item: Cell, key: number) => {
+            this.events.emit('board-changed', item, key)
         }
     }
 
@@ -77,5 +83,10 @@ export default class Server
     onPlayerTurnChanged(cb: (playerIndex: number) => void, context?: any)
     {
         this.events.on('player-turn-changed', cb, context)
+    }
+
+    onPlayerWin(cb: (playerIndex: number) => void, context?: any)
+    {
+        this.events.on('player-win', cb, context)
     }
 }

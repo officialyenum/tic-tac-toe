@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 
 import Bootstrap from './scenes/Bootstrap'
 import Game from './scenes/Game';
+import GameOver from './scenes/GameOver';
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -18,7 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
 		width: 600,
 		height: 600,
 	},
-	scene: [Bootstrap, Game]
+	scene: [Bootstrap, Game, GameOver]
 }
 
 export default new Phaser.Game(config)

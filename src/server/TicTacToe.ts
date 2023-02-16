@@ -11,6 +11,7 @@ export default class TicTacToe extends Room<TicTacToeState> {
     
     onCreate()
     {
+        this.maxClients = 2;
         this.setState(new TicTacToeState())
 
         this.onMessage(Message.PlayerSelection, (client, message: {index: number}) => {
@@ -24,11 +25,7 @@ export default class TicTacToe extends Room<TicTacToeState> {
     onJoin(client: Client) {
         console.log(this.clients.length);
         const idx = this.clients.findIndex(c => c.sessionId === client.sessionId)
-        console.log(client.sessionId);
+        console.log(idx);
 		client.send(Message.PlayerIndex, { playerIndex: idx })    
     }
-
-    // onDispose() {
-    //     this.dispatcher.stop();
-    // }
 }

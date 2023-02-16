@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import * as Colyseus from "colyseus.js";
 import Server from '../services/Server';
+import { IGameOverSceneData } from '../../types/scenes';
 
 export default class Bootstrap extends Phaser.Scene
 {
@@ -23,7 +24,11 @@ export default class Bootstrap extends Phaser.Scene
     create()
     {
         this.scene.launch('game', {
-            server: this.server
+            server: this.server,
+            onGameOver: (data: IGameOverSceneData) => {
+                this.scene.stop('game');
+                this.scene.launch('game-over', data)
+            }
         });        
     }
 

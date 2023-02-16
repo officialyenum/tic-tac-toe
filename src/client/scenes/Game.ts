@@ -1,13 +1,14 @@
 import Phaser from 'phaser'
 import * as Colyseus from "colyseus.js";
 import type Server from '../services/Server';
-import ITicTacToeState from '~/types/ITicTacToeState';
-import { Cell } from "../../types/ITicTacToeState";
+import ITicTacToeState, { Cell } from "../../types/ITicTacToeState";
+import { IGameOverSceneData, IGameSceneData } from '../../types/scenes';
 
 export default class Game extends Phaser.Scene
 {
 
     private server?: Server
+    private onGameOver?: (data: IGameOverSceneData) => void
     private cells: {display:Phaser.GameObjects.Rectangle, value: Cell }[] = []
 
 	constructor()
@@ -20,11 +21,12 @@ export default class Game extends Phaser.Scene
         
     }
 
-    async create(data: {  server:Server})
+    async create(data: IGameSceneData)
     {
-        const { server } = data
+        const { server, onGameOver } = data
         
         this.server = server;
+        this.onGameOver = onGameOver
         if (!this.server) {
             throw new Error('server instance missing');
         }
@@ -73,13 +75,13 @@ export default class Game extends Phaser.Scene
 
         this.server?.onBoardChanged(this.handleBoardChanged, this)
         this.server?.onPlayerTurnChanged(this.handlePlayerTurnChanged, this);
+        this.server?.onPlayerWin(this.handlePlayerWin, this);
     }
 
     private handleBoardChanged(item: Cell, key:number) 
     {
         
         const cell = this.cells[key].display as any
-        console.log(cell);
 
         switch (item) {
             case Cell.X:
@@ -99,20 +101,25 @@ export default class Game extends Phaser.Scene
             value: item
         }
 
-
-        
-        // for (let i = 0; i < board.length; i++) {
-        //     const cell = this.cells[i];
-        //     if(cell.value !== board[i]){
-        //         this.add.star(cell.display.x, cell.display.y, 4, 4, 32, 0xff0000).setAngle(45)
-        //         cell.value = board[i];
-        //     }
-        // }
     }
 
     private handlePlayerTurnChanged(playerIndex: number)
     {
-        console.log("player index : "+ playerIndex);
+        //TODO: Show player if it is their turn
         
+    }
+
+    private handlePlayerWin(playerIndex: number)
+    {
+        this.time.delayedCall(1000, () => {
+			if (!this.onGameOver)
+			{
+				return
+			}
+
+			this.onGameOver({
+				winner: this.server?.playerIndex === playerIndex
+			})
+		})
     }
 }

@@ -10,6 +10,7 @@ export interface  ITicTacToeState extends Schema
 {
     board: ArraySchema<Cell>
     activePlayer: number
+    winningPlayer: number
 }
 
 export default ITicTacToeState;
