@@ -57,12 +57,9 @@ export default class CheckWinnerCommand extends Command<ITicTacToeState, Payload
         const win = this.determineWin();
         if (win) {
             //TODO: SET  WINNER PLAYER ON  STATE
-            console.log('server won :' + win);
-            
             this.state.winningPlayer = this.state.activePlayer
         }else{
             this.state.winningPlayer = -1
-            console.log('server lost :' + win);
             return [
                 new NextTurnCommand()
             ]

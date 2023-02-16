@@ -14,8 +14,8 @@ const config: Phaser.Types.Core.GameConfig = {
 	scale: {
 		parent: 'canvas',
 		autoCenter: Phaser.Scale.Center.CENTER_BOTH,	
-		width: 600,
-		height: 600,
+		width: 300,
+		height: 450,
 	},
 	scene: [Bootstrap, Game, GameOver]
 }

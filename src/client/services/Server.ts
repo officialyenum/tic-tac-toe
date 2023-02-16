@@ -1,6 +1,6 @@
 import  { Client, Room } from 'colyseus.js';
 import Phaser from 'phaser';
-import { ITicTacToeState, Cell, Message } from '../../types'
+import { ITicTacToeState, Cell, Message, GameState } from '../../types'
 
 export default class Server
 {
@@ -12,6 +12,14 @@ export default class Server
     get playerIndex()
     {
         return this._playerIndex;
+    }
+
+    get gameState()
+    {
+        if (!this.room) {
+            return GameState.WaitingForPlayers;
+        }
+        return this.room?.state.gameState;
     }
     constructor()
     {
@@ -42,6 +50,10 @@ export default class Server
 					case 'winningPlayer':
 						this.events.emit('player-win', value)
                         break;
+
+                    case 'gameState':
+                        this.events.emit('game-state-changed', value)
+                        break;
                 }
             })
         }
@@ -60,6 +72,10 @@ export default class Server
     {
         if (!this.room) 
         {
+            return
+        }
+
+        if (this.room.state.gameState !== GameState.Playing) {
             return
         }
 
@@ -92,5 +108,10 @@ export default class Server
     onPlayerWin(cb: (playerIndex: number) => void, context?: any)
     {
         this.events.on('player-win', cb, context)
+    }
+
+    onGameStateChanged(cb: (state: GameState) => void, context?: any)
+    {
+        this.events.on('game-state-changed',cb, context)
     }
 }

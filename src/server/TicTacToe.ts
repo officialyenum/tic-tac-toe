@@ -23,12 +23,11 @@ export default class TicTacToe extends Room<TicTacToeState> {
     }
 
     onJoin(client: Client) {
-        console.log(this.clients.length);
         const idx = this.clients.findIndex(c => c.sessionId === client.sessionId)
-        console.log(idx);
 		client.send(Message.PlayerIndex, { playerIndex: idx })  
         if (this.clients.length >= 2) {
             this.state.gameState = GameState.Playing;
+            this.lock()
         }  
     }
 }
