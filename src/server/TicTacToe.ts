@@ -1,7 +1,7 @@
 // Import demo room handlers
 import { Dispatcher } from '@colyseus/command'
 import { Room, Client } from 'colyseus'
-import { Message } from '../types/message'
+import { GameState, Message } from '../types'
 import PlayerSelectionCommand from './commands/PlayerSelectionCommands'
 import TicTacToeState from "./TicTacToeState"
 
@@ -26,6 +26,9 @@ export default class TicTacToe extends Room<TicTacToeState> {
         console.log(this.clients.length);
         const idx = this.clients.findIndex(c => c.sessionId === client.sessionId)
         console.log(idx);
-		client.send(Message.PlayerIndex, { playerIndex: idx })    
+		client.send(Message.PlayerIndex, { playerIndex: idx })  
+        if (this.clients.length >= 2) {
+            this.state.gameState = GameState.Playing;
+        }  
     }
 }

@@ -1,6 +1,6 @@
 import { Command } from '@colyseus/command';
 import { Client } from 'colyseus';
-import ITicTacToeState, { Cell } from '../../types/ITicTacToeState';
+import { ITicTacToeState, Cell } from '../../types';
 import CheckWinnerCommand from './CheckWinnerCommand';
 
 type Payload = {

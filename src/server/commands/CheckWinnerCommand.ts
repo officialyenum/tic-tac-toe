@@ -1,6 +1,6 @@
 import  { Command } from '@colyseus/command'
 import { Client } from 'colyseus.js';
-import ITicTacToeState, { Cell } from '../../types/ITicTacToeState';
+import { ITicTacToeState, Cell } from '../../types';
 import NextTurnCommand from './NextTurnCommand';
 
 type Payload = {

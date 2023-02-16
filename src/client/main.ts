@@ -1,9 +1,7 @@
 import 'regenerator-runtime/runtime';
 import Phaser from 'phaser'
 
-import Bootstrap from './scenes/Bootstrap'
-import Game from './scenes/Game';
-import GameOver from './scenes/GameOver';
+import { Bootstrap, Game, GameOver } from './scenes'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,

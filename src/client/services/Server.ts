@@ -1,7 +1,6 @@
 import  { Client, Room } from 'colyseus.js';
 import Phaser from 'phaser';
-import ITicTacToeState, { Cell } from '../../types/ITicTacToeState'
-import { Message } from '../../types/message'
+import { ITicTacToeState, Cell, Message } from '../../types'
 
 export default class Server
 {
@@ -50,6 +49,11 @@ export default class Server
         this.room.state.board.onChange = (item: Cell, key: number) => {
             this.events.emit('board-changed', item, key)
         }
+    }
+
+    leave() {
+        this.room?.leave()
+        this.events.removeAllListeners()
     }
 
     makeSelection(idx: number)

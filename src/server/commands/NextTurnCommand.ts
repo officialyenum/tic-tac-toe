@@ -1,5 +1,5 @@
 import  { Command } from '@colyseus/command'
-import ITicTacToeState from '../../types/ITicTacToeState';
+import { ITicTacToeState } from '../../types';
 
 export default class NextTurnCommand extends Command<ITicTacToeState> 
 {

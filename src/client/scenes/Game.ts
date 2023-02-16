@@ -1,10 +1,9 @@
 import Phaser from 'phaser'
 import * as Colyseus from "colyseus.js";
 import type Server from '../services/Server';
-import ITicTacToeState, { Cell } from "../../types/ITicTacToeState";
-import { IGameOverSceneData, IGameSceneData } from '../../types/scenes';
+import { ITicTacToeState, IGameOverSceneData, IGameSceneData, Cell } from '../../types';
 
-export default class Game extends Phaser.Scene
+export class Game extends Phaser.Scene
 {
 
     private server?: Server
@@ -118,7 +117,8 @@ export default class Game extends Phaser.Scene
 			}
 
 			this.onGameOver({
-				winner: this.server?.playerIndex === playerIndex
+				winner: this.server?.playerIndex === playerIndex,
+                onRestart: () => {}
 			})
 		})
     }
